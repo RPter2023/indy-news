@@ -1,0 +1,244 @@
+openapi: 3.1.0
+info:
+  title: FastAPI
+  version: 0.1.0
+paths:
+  /media:
+    get:
+      summary: Search Media
+      operationId: search_media_media_get
+      parameters:
+      - name: query
+        in: query
+        required: true
+        schema:
+          type: string
+          title: Query
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 5
+          title: Limit
+      - name: offset
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 0
+          title: Offset
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Media'
+                title: Response Search Media Media Get
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /youtube:
+    get:
+      summary: Search Youtube
+      operationId: search_youtube_youtube_get
+      parameters:
+      - name: query
+        in: query
+        required: true
+        schema:
+          type: string
+          title: Query
+      - name: period_days
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 1
+          title: Period Days
+      - name: max_channels
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 8
+          title: Max Channels
+      - name: max_videos_per_channel
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 3
+          title: Max Videos Per Channel
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Video'
+                title: Response Search Youtube Youtube Get
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /privacy:
+    get:
+      summary: Read Privacy
+      operationId: read_privacy_privacy_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+components:
+  schemas:
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    Media:
+      properties:
+        Name:
+          type: string
+          title: Name
+        Website:
+          type: string
+          title: Website
+        Youtube:
+          type: string
+          title: Youtube
+        About:
+          type: string
+          title: About
+        TrustFactors:
+          type: string
+          title: Trustfactors
+        Topics:
+          type: string
+          title: Topics
+        Wikipedia:
+          type: string
+          title: Wikipedia
+        X:
+          type: string
+          title: X
+        Bias:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Bias
+        Profile:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Profile
+        Factual:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Factual
+        Credibility:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Credibility
+      type: object
+      required:
+      - Name
+      - Website
+      - Youtube
+      - About
+      - TrustFactors
+      - Topics
+      - Wikipedia
+      - X
+      - Bias
+      - Profile
+      - Factual
+      - Credibility
+      title: Media
+      description: Media model
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    Video:
+      properties:
+        id:
+          type: string
+          title: Id
+        thumbnails:
+          items:
+            type: string
+          type: array
+          title: Thumbnails
+        title:
+          type: string
+          title: Title
+        long_desc:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Long Desc
+        channel:
+          type: string
+          title: Channel
+        duration:
+          type: string
+          title: Duration
+        views:
+          type: string
+          title: Views
+        publish_time:
+          type: string
+          title: Publish Time
+        url_suffix:
+          type: string
+          title: Url Suffix
+      type: object
+      required:
+      - id
+      - thumbnails
+      - title
+      - long_desc
+      - channel
+      - duration
+      - views
+      - publish_time
+      - url_suffix
+      title: Video
+      description: Video model

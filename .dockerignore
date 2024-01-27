@@ -1,0 +1,11 @@
+Dockerfile
+.dockerignore
+README.md
+.git
+.env.local
+.env.prod.local
+.dev
+.github
+.venv
+.vscode
+--pycache__

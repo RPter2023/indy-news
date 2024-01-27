@@ -1,0 +1,8 @@
+faiss-cpu
+fastapi
+llama_index
+openai
+pyyaml
+rank-bm25
+streamlit
+uvicorn

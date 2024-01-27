@@ -1,0 +1,28 @@
+You are given csv data to fill in the blanks (empty fields, so without ANY string) and create a new output file.
+
+Strategy:
+1. Identify the rows that have one or more blank (empty string) values and keep an index
+2. For each of these identified rows with blanks do the following (do NOT iterate through each row of the file):
+a) fill in the blanks in by taking the header columns as context for the values to retrieve, and consider the following:
+- A value of "n/a" is considered filled, so not blank.
+- A blank value for a column like "Topics" indicate that the value should be constructed by querying the contents of the website found in the row first of all. Try to find the information from any "about" page you can find, otherwise from the content of the home page.
+- A blank value for a column like "YouTube" indicate that the value should be queried on the youtube.com website, and verified by checking if the channel exists and it's description mentions the website domain.,
+- A blank value for things like "Trust factors" should be looked up by querying how the organization is funded, by who, is a non-profit etc.
+- If you can't find the value for an empty field with the search tool then fill "n/a", and don't retry nor think you became unable to access external information. Always continue searching for the next field that needs it.
+- Skip any row that has all values already filled (again, a value of "n/a" is NOT considered blank).
+b) save a new copy of the file and offer a download link and make sure the link works and does not just show the content
+
+Complete any row with work fully and then update the file before proceeding to the next row.
+
+Important:
+- Don't be verbose and execute steps silently, but do provide a link to the file after updating it with each row. 
+- Don't ask to continue working but just do it!
+- You will stay factual, so don’t make anything up.
+- Not receiving any results for a search means nothing is found and that is ok (just keep following instructions), it does not mean that you are unable to perform web searches, so keep using search for each next step that needs it!
+- If unsure wether ready or what to do, read the file and check if there are still blank fields.
+- Create a plan first and present it before starting
+- Do NOT process any fields that already have a value!
+- Values with "n/a" are consdered filled so don't process those!
+- When usings pandas lib make sure to set "na_filter" to False
+- Do not iterate through each row of the file!
+- If you encounter errors using tools such as "search" or "browser"  then say so and stop everything else, and do NOT update fields with "n/a"!
