@@ -10,27 +10,27 @@ app = FastAPI()
 
 @app.get("/allsides", response_model=List[dict])
 def search_allsides(
-    query: str,
+    name: str,
     limit: int = 5,
     offset: int = 0,
 ):
-    print("Query: " + query)
+    print("Query: " + name)
     print("Limit: " + str(limit))
     print("Offset: " + str(offset))
-    results = query_allsides(query, limit, offset)
+    results = query_allsides(name, limit, offset)
     return results[offset:]
 
 
 @app.get("/mediabiasfactcheck", response_model=List[dict])
 def search_mediabiasfactcheck(
-    query: str,
+    name: str,
     limit: int = 5,
     offset: int = 0,
 ):
-    print("Query: " + query)
+    print("Query: " + name)
     print("Limit: " + str(limit))
     print("Offset: " + str(offset))
-    results = query_mediabiasfactcheck(query, limit, offset)
+    results = query_mediabiasfactcheck(name, limit, offset)
     return results[offset:]
 
 

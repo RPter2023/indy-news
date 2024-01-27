@@ -3,6 +3,88 @@ info:
   title: FastAPI
   version: 0.1.0
 paths:
+  /allsides:
+    get:
+      summary: Search Allsides
+      operationId: search_allsides_allsides_get
+      parameters:
+      - name: name
+        in: query
+        required: true
+        schema:
+          type: string
+          title: Name
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 5
+          title: Limit
+      - name: offset
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 0
+          title: Offset
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                title: Response Search Allsides Allsides Get
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /mediabiasfactcheck:
+    get:
+      summary: Search Mediabiasfactcheck
+      operationId: search_mediabiasfactcheck_mediabiasfactcheck_get
+      parameters:
+      - name: name
+        in: query
+        required: true
+        schema:
+          type: string
+          title: Name
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 5
+          title: Limit
+      - name: offset
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 0
+          title: Offset
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                title: Response Search Mediabiasfactcheck Mediabiasfactcheck Get
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
   /media:
     get:
       summary: Search Media
@@ -218,13 +300,19 @@ components:
           type: string
           title: Channel
         duration:
-          type: string
+          anyOf:
+          - type: string
+          - type: integer
           title: Duration
         views:
-          type: string
+          anyOf:
+          - type: string
+          - type: integer
           title: Views
         publish_time:
-          type: string
+          anyOf:
+          - type: string
+          - type: integer
           title: Publish Time
         url_suffix:
           type: string
