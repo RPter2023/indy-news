@@ -2,8 +2,8 @@ from typing import List
 
 from fastapi import FastAPI
 
-from store import Media, query_allsides, query_media, query_mediabiasfactcheck
-from tools.youtube import Video, search_youtube_channel
+from api.store import Media, query_allsides, query_media, query_mediabiasfactcheck
+from api.tools.youtube import Video, search_youtube_channel
 
 app = FastAPI()
 

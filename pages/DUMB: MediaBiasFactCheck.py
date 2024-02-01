@@ -1,8 +1,6 @@
-import asyncio
-
 import streamlit as st
 
-from api import search_mediabiasfactcheck
+from api.main import search_mediabiasfactcheck
 
 st.sidebar.title("Indy News Search")
 st.title("Search MediaBiasFactCheck DB")

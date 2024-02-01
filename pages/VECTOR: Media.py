@@ -2,7 +2,7 @@ import asyncio
 
 import streamlit as st
 
-from api import search_media
+from api.main import search_media
 
 st.sidebar.title("Indy News Search")
 st.title("Search media outlets by topic")

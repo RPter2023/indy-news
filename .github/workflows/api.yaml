@@ -4,6 +4,11 @@ on:
   push:
     branches:
       - main
+    paths:
+      - 'api/**'
+      - 'data/**'
+      - 'db/**'
+      - 'lib/**'
 
 env:
   CACHE_REGISTRY: ghcr.io
@@ -49,12 +54,13 @@ jobs:
         uses: docker/metadata-action@v4
         with:
           images: ${{ env.IMAGE_NAME }}
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
+      # - name: Set up Docker Buildx
+      #   uses: docker/setup-buildx-action@v2
       - name: Build and push image to target and cache registry
         uses: docker/build-push-action@v4
         with:
           context: .
+          platforms: linux/amd64,linux/arm64
           push: true
           tags: |
             ${{ steps.meta.outputs.tags }}

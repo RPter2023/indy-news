@@ -2,7 +2,7 @@ import asyncio
 
 import streamlit as st
 
-from api import search_youtube
+from api.main import search_youtube
 
 st.sidebar.title("Indy News Search")
 st.title("Youtube overview by topic")

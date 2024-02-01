@@ -2,7 +2,7 @@ import asyncio
 
 import streamlit as st
 
-from api import search_allsides
+from api.main import search_allsides
 
 st.sidebar.title("Indy News Search")
 st.title("Search AllSides DB")

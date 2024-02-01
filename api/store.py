@@ -17,8 +17,8 @@ from llama_index.schema import NodeWithScore
 from llama_index.vector_stores import FaissVectorStore
 from pydantic import BaseModel
 
+from api.retriever import HybridRetriever
 from lib.cache import async_threadsafe_ttl_cache as cache
-from retriever import HybridRetriever
 
 allsides_file = "./data/allsides.com.json"
 mbfc_file = "./data/mediabiasfactcheck.com.json"
