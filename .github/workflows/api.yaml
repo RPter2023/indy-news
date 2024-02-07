@@ -20,7 +20,7 @@ env:
   IMAGE_NAME: morriz/indy-news
 
 jobs:
-  api:
+  morriz-indy-news:
     timeout-minutes: 15
     runs-on: ubuntu-latest
     steps:

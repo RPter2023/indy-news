@@ -8,7 +8,7 @@
       "name": "Python: API",
       "type": "python",
       "request": "launch",
-      "program": "api.py",
+      "program": "api/main.py",
       "console": "integratedTerminal",
       "justMyCode": false
     },

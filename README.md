@@ -29,3 +29,9 @@ The following got normalized and ended up in all.csv:
 - [localfutures.org](https://localfutures.org)
 - [trustworthymedia.org](https://trustworthymedia.org)
 - some individuals and teams that I esteem and follow myself ;)
+
+### Dev instructions
+
+Run streamlit locally: `.venv/bin/streamlit run streamlit.py`
+
+Run api locally: `.venv/bin/uvicorn --host "0.0.0.0" -p 8088`
