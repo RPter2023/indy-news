@@ -5,10 +5,14 @@ on:
     branches:
       - main
     paths:
+      - .dockerignore
       - 'api/**'
       - 'data/**'
       - 'db/**'
       - 'lib/**'
+      - 'Dockerfile'
+      - 'Home.py'
+      - 'requirements-prod.txt'
 
 env:
   CACHE_REGISTRY: ghcr.io
