@@ -11,7 +11,7 @@ FROM ci as test
 COPY . /app
 RUN bin/format.sh && bin/lint.sh
 
-FROM python:3.11-alpine
+FROM python:3.11-slim
 WORKDIR /app
 COPY --from=base /app /app
 COPY . /app
