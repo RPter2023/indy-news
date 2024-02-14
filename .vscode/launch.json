@@ -6,7 +6,7 @@
   "configurations": [
     {
       "name": "Python: API",
-      "type": "python",
+      "type": "debugpy",
       "request": "launch",
       "program": "api/main.py",
       "console": "integratedTerminal",
@@ -14,13 +14,10 @@
     },
     {
       "name": "streamlit debug",
-      "type": "python",
+      "type": "debugpy",
       "request": "launch",
       "module": "streamlit",
-      "args": [
-        "run",
-        "Home.py"
-      ],
+      "args": [ "run", "Home.py" ],
       "justMyCode": true,
     }
   ]

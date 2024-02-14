@@ -29,6 +29,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Set env
+        # we keep the tag for the cache registry
         run: |
           tag=${GITHUB_REF##*/}
           echo "Creating tag: $tag"
@@ -50,16 +51,16 @@ jobs:
           password: ${{ env.TARGET_REGISTRY_PASS }}
       - name: Pull the previous image as cache
         run: |
-          TAG=${GITHUB_REF##*/}
-          IMAGE=${{ env.CACHE_REGISTRY }}/${{ env.IMAGE_NAME }}:${TAG}
-          docker pull ${{ env.CACHE_REGISTRY }}/${{ env.IMAGE_NAME }}:${TAG} || true
+          IMAGE=${{ env.CACHE_REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.TAG }}
+          docker pull ${{ env.CACHE_REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.TAG }} || true
       - name: Extract metadata (tags, labels) for target
         id: meta
         uses: docker/metadata-action@v4
         with:
           images: ${{ env.IMAGE_NAME }}
-      # - name: Set up Docker Buildx
-      #   uses: docker/setup-buildx-action@v2
+          # generate Docker tags based on the following events/attributes
+          tags: |
+            type=ref,event=branch
       - name: Build and push image to target and cache registry
         uses: docker/build-push-action@v4
         with:

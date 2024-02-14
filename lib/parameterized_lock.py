@@ -1,19 +1,22 @@
-import threading
 from contextlib import contextmanager
+from threading import Lock
+from typing import Any, Dict, Generator
 
-namespace_lock = threading.Lock()
-namespace = {}
-counters = {}
+namespace_lock = Lock()
+namespace: Dict[str, Lock] = {}
+counters: Dict[str, int] = {}
 
 
 @contextmanager
-def parameterized_lock(value, blocking=True, timeout=-1.0):
+def parameterized_lock(
+    value: Any, blocking: bool = True, timeout: float = -1.0
+) -> Generator[bool, None, None]:
     try:
         with namespace_lock:
             if value in namespace:
                 counters[value] += 1
             else:
-                namespace[value] = threading.Lock()
+                namespace[value] = Lock()
                 counters[value] = 1
 
         yield namespace[value].acquire(blocking=blocking, timeout=timeout)

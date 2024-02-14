@@ -1,5 +1,3 @@
-import asyncio
-
 import streamlit as st
 
 from api.main import search_allsides
@@ -9,8 +7,8 @@ st.title("Search AllSides DB")
 st.markdown(
     """
 ## Search for media outlets by partial name
-#### Uses a snapshot of the AllSides DB (1604 records) and checks wether input is found in the *NAME* only.
-#### (Ratings might differ from those in MediaBiasFactCheck, which seems not always up to date and is not as comprehensive.)
+Uses a snapshot of the AllSides DB (1604 records) and checks wether input is found in the *NAME* only.
+(Ratings might differ from those in MediaBiasFactCheck, which seems not always up to date and is not as comprehensive.)
 """
 )
 name = st.text_input("Search by name...", value="Democracy Now", max_chars=255)
@@ -21,7 +19,7 @@ if name == "":
     st.stop()
 
 
-def search_and_display_results():
+def search_and_display_results() -> None:
     results = search_allsides(name, limit)
     st.json(results, expanded=True)
 

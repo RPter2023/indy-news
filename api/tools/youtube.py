@@ -1,7 +1,7 @@
 import json
 import time
 import urllib.parse
-from typing import List, Union
+from typing import Dict, List, Union
 
 import requests
 from pydantic import BaseModel
@@ -23,21 +23,26 @@ class Video(BaseModel):
     url_suffix: str
 
 
-def _parse_html(html, max_results: str) -> List[dict]:
-    results = []
+def _parse_html(
+    html: str, max_results: int
+) -> List[Dict[str, Union[str, List[str], int, None]]]:
+    results: List[Dict[str, Union[str, List[str], int, None]]] = []
     start = html.index("ytInitialData") + len("ytInitialData") + 3
     end = html.index("};", start) + 1
     json_str = html[start:end]
     data = json.loads(json_str)
+    tab = None
     for tab in data["contents"]["twoColumnBrowseResultsRenderer"]["tabs"]:
         if "expandableTabRenderer" in tab.keys():
             break
+    if tab is None:
+        return results
     for contents in tab["expandableTabRenderer"]["content"]["sectionListRenderer"][
         "contents"
     ]:
         for video in contents["itemSectionRenderer"]["contents"]:
-            res = {}
-            if "videoRenderer" in video.keys() and len(res) < max_results:
+            res: Dict[str, Union[str, List[str], int, None]] = {}
+            if "videoRenderer" in video.keys() and len(results) < int(max_results):
                 video_data = video.get("videoRenderer", {})
                 res["id"] = video_data.get("videoId", None)
                 res["thumbnails"] = [
@@ -78,7 +83,7 @@ def _parse_html(html, max_results: str) -> List[dict]:
 @cache(ttl=3600)
 def search_youtube_channel(
     channel_url: str, search_terms: str, period_days: int, max_results: int
-):
+) -> List[Dict[str, Union[str, List[str], int, None]]]:
     # calculate day and month from today minus period_days:
     today = time.time()
     period = int(period_days) * 24 * 3600

@@ -1,20 +1,18 @@
 import json
 import os
-from typing import Union
+from typing import Dict, List, Union
 
 import faiss
 import pandas as pd
-from llama_index import (
-    Document,
-    OpenAIEmbedding,
-    ServiceContext,
-    StorageContext,
-    VectorStoreIndex,
-    load_index_from_storage,
-)
-from llama_index.retrievers import BM25Retriever, RouterRetriever, VectorIndexRetriever
-from llama_index.schema import NodeWithScore
-from llama_index.vector_stores import FaissVectorStore
+from llama_index.core.indices import load_index_from_storage
+from llama_index.core.indices.vector_store.base import VectorStoreIndex
+from llama_index.core.retrievers import VectorIndexRetriever
+from llama_index.core.schema import Document, NodeWithScore
+from llama_index.core.service_context import ServiceContext
+from llama_index.core.storage.storage_context import StorageContext
+from llama_index.embeddings.openai import OpenAIEmbedding
+from llama_index.retrievers.bm25 import BM25Retriever
+from llama_index.vector_stores.faiss import FaissVectorStore
 from pydantic import BaseModel
 
 from api.retriever import HybridRetriever
@@ -43,8 +41,8 @@ class Media(BaseModel):
     Credibility: Union[str, None]
 
 
-def _merge_facts(df: pd.DataFrame, facts: dict):
-    def merge_fact(row: pd.Series):
+def _merge_facts(df: pd.DataFrame, facts: Dict[str, Dict[str, str]]) -> pd.DataFrame:
+    def merge_fact(row: pd.Series) -> pd.Series:
         name = row["Name"].lower()
         if name in facts:
             fact = facts[name]
@@ -59,7 +57,7 @@ def _merge_facts(df: pd.DataFrame, facts: dict):
     return df.apply(merge_fact, axis=1)
 
 
-def _get_data():
+def _get_data() -> List[Dict[str, str]]:
     combined = "data/combined.json"
     if os.path.exists(combined):
         with open(combined, encoding="utf-8") as f:
@@ -78,7 +76,7 @@ def _get_data():
         return data
 
 
-def _get_documents():
+def _get_documents() -> List[Document]:
     """
     Let's create custom documents from json to avoid cruft, to get more reliable scoring during retrieval.
     We keep our own index to later map back to the original json dicts corresponding to the matching documents.
@@ -101,14 +99,14 @@ def _get_documents():
     return documents
 
 
-def _get_index():
+def _get_index() -> VectorStoreIndex:
     exists = os.path.exists(persist_dir)
     print("DB exists: " + str(exists))
 
     d = 3072
     embed_model = OpenAIEmbedding(model_name="text-embedding-3-large", dimensions=d)
     service_context = ServiceContext.from_defaults(embed_model=embed_model)
-
+    index: VectorStoreIndex
     if exists:
         vector_store = FaissVectorStore.from_persist_dir(persist_dir)
         storage_context = StorageContext.from_defaults(
@@ -130,7 +128,7 @@ def _get_index():
     return index
 
 
-def _get_retriever(top_k: int) -> RouterRetriever:
+def _get_retriever(top_k: int) -> HybridRetriever:
     use_top_k = top_k * 2
     index = _get_index()
     bm25_retriever = BM25Retriever.from_defaults(
@@ -186,7 +184,7 @@ async def query_media(query: str, top_k: int = 5) -> list[Media]:
     return data
 
 
-def query_allsides(query: str, limit: int = 5, offset: int = 0) -> list[Media]:
+def query_allsides(query: str, limit: int = 5, offset: int = 0) -> List[Dict[str, str]]:
     with open(allsides_file, encoding="utf-8") as f:
         fact_list = json.load(f)
     results = []
@@ -198,7 +196,7 @@ def query_allsides(query: str, limit: int = 5, offset: int = 0) -> list[Media]:
 
 def query_mediabiasfactcheck(
     query: str, limit: int = 5, offset: int = 0
-) -> list[Media]:
+) -> List[Dict[str, str]]:
     with open(mbfc_file, encoding="utf-8") as f:
         fact_list = json.load(f)
     results = []

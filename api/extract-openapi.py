@@ -30,8 +30,15 @@ if __name__ == "__main__":
     openapi = app.openapi()
     version = openapi.get("openapi", "unknown version")
 
+    # add auth
+    openapi["components"]["securitySchemes"] = {
+        "bearerAuth": {
+            "type": "http",
+            "scheme": "bearer",
+        }
+    }
     print(f"writing openapi spec v{version}")
-    with open(args.out, "w") as f:
+    with open(args.out, "w", encoding="utf-8") as f:
         if args.out.endswith(".json"):
             json.dump(openapi, f, indent=2)
         else:

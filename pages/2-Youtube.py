@@ -9,8 +9,8 @@ st.title("Youtube overview by topic")
 st.markdown(
     """
 ## Get an overview of youtube videos that indy media are publishing on a topic.
-#### First uses "Media" endpoint to find sources and then queries youtube for videos from those sources.
-##### (Results are cached one hour.)
+First uses "Media" endpoint to find sources and then queries youtube for videos from those sources.
+(Results are cached one hour.)
 """
 )
 query = st.text_input("Search for topics/keywords...", value="israel", max_chars=255)
@@ -25,7 +25,7 @@ if query == "":
     st.stop()
 
 
-async def get_youtube_results():
+async def get_youtube_results() -> None:
     results = await search_youtube(
         query, period_days, max_channels, max_videos_per_channel
     )

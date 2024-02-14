@@ -5,12 +5,11 @@ RUN python -m venv .venv
 RUN .venv/bin/pip install --no-cache-dir -r requirements-prod.txt
 
 FROM base as ci
-COPY . /app
-RUN .venv/bin/pip install pylint
+RUN .venv/bin/pip install --no-cache-dir -r requirements-test.txt
 
 FROM ci as test
-RUN .venv/bin/python -m unittest discover -s . -p '*_test.py'
-RUN .venv/bin/pylint **/*.py
+COPY . /app
+RUN bin/format.sh && bin/lint.sh
 
 FROM python:3.11-alpine
 WORKDIR /app

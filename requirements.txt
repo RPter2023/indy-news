@@ -1,6 +1,9 @@
 faiss-cpu
 fastapi
 llama_index
+llama-index-llms-openai
+llama-index-retrievers-bm25
+llama-index-vector-stores-faiss
 openai
 pyyaml
 rank-bm25
