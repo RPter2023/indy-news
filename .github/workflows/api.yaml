@@ -6,6 +6,7 @@ on:
       - main
     paths:
       - .dockerignore
+      - .github/**
       - 'api/**'
       - 'data/**'
       - 'db/**'
@@ -24,7 +25,7 @@ env:
   IMAGE_NAME: morriz/indy-news
 
 jobs:
-  morriz-indy-news:
+  api:
     timeout-minutes: 15
     runs-on: ubuntu-latest
     steps:
