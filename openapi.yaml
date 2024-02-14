@@ -7,6 +7,10 @@ paths:
     get:
       summary: Search Allsides
       operationId: search_allsides_allsides_get
+      security:
+      - APIKeyQuery: []
+      - APIKeyHeader: []
+      - HTTPBearer: []
       parameters:
       - name: name
         in: query
@@ -37,6 +41,8 @@ paths:
                 type: array
                 items:
                   type: object
+                  additionalProperties:
+                    type: string
                 title: Response Search Allsides Allsides Get
         '422':
           description: Validation Error
@@ -48,6 +54,10 @@ paths:
     get:
       summary: Search Mediabiasfactcheck
       operationId: search_mediabiasfactcheck_mediabiasfactcheck_get
+      security:
+      - APIKeyQuery: []
+      - APIKeyHeader: []
+      - HTTPBearer: []
       parameters:
       - name: name
         in: query
@@ -78,6 +88,8 @@ paths:
                 type: array
                 items:
                   type: object
+                  additionalProperties:
+                    type: string
                 title: Response Search Mediabiasfactcheck Mediabiasfactcheck Get
         '422':
           description: Validation Error
@@ -89,6 +101,10 @@ paths:
     get:
       summary: Search Media
       operationId: search_media_media_get
+      security:
+      - APIKeyQuery: []
+      - APIKeyHeader: []
+      - HTTPBearer: []
       parameters:
       - name: query
         in: query
@@ -130,6 +146,10 @@ paths:
     get:
       summary: Search Youtube
       operationId: search_youtube_youtube_get
+      security:
+      - APIKeyQuery: []
+      - APIKeyHeader: []
+      - HTTPBearer: []
       parameters:
       - name: query
         in: query
@@ -183,7 +203,9 @@ paths:
           description: Successful Response
           content:
             application/json:
-              schema: {}
+              schema:
+                type: string
+                title: Response Read Privacy Privacy Get
 components:
   schemas:
     HTTPValidationError:
@@ -330,3 +352,15 @@ components:
       - url_suffix
       title: Video
       description: Video model
+  securitySchemes:
+    APIKeyQuery:
+      type: apiKey
+      in: query
+      name: apikey
+    APIKeyHeader:
+      type: apiKey
+      in: header
+      name: X-API-KEY
+    HTTPBearer:
+      type: http
+      scheme: bearer
