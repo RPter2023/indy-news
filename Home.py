@@ -1,6 +1,7 @@
+import nltk
 import streamlit as st
-from nltk.corpus import stopwords
 
+nltk.download('stopwords')
 st.sidebar.title("Indy News Search")
 
 

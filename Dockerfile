@@ -2,7 +2,7 @@ FROM python:3.11 as base
 WORKDIR /app
 COPY requirements-prod.txt /app/
 RUN python -m venv .venv
-RUN .venv/bin/pip install --no-cache-dir -r requirements-prod.txt
+RUN .venv/bin/pip install --no-cache-dir -r requirements.txt
 
 FROM base as ci
 RUN .venv/bin/pip install --no-cache-dir -r requirements-test.txt
