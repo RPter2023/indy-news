@@ -1,4 +1,5 @@
 import streamlit as st
+from nltk.corpus import stopwords
 
 st.sidebar.title("Indy News Search")
 

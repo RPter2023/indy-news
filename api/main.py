@@ -2,7 +2,6 @@ import os
 from typing import Dict, List
 
 from fastapi import Depends, FastAPI
-from fastapi.security import APIKeyQuery
 
 from api.store import Media, query_allsides, query_media, query_mediabiasfactcheck
 from api.tools.youtube import Video, search_youtube_channel
@@ -10,7 +9,6 @@ from lib.auth import verify_apikey
 
 api_token = os.environ["API_KEY"]
 app = FastAPI()
-query_scheme = APIKeyQuery(name="api_key")
 
 
 @app.get("/allsides", response_model=List[Dict[str, str]])
